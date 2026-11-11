@@ -1,16 +1,38 @@
 
+/* =====================================
+   VIRTUAL CLASSROOM - JAVASCRIPT
+===================================== */
+
+/* 1. CHUYỂN TRANG */
+
 function showPage(page, button) {
-    document.querySelectorAll(".page").forEach(p => {
+    const pages = document.querySelectorAll(".page");
+
+    pages.forEach(p => {
         p.classList.remove("active");
     });
 
-    document.getElementById(page).classList.add("active");
+    const selectedPage = document.getElementById(page);
+
+    if (!selectedPage) return;
+
+    selectedPage.classList.add("active");
 
     document.querySelectorAll(".nav").forEach(b => {
         b.classList.remove("active");
     });
 
-    if (button) button.classList.add("active");
+    if (button) {
+        button.classList.add("active");
+    } else {
+        const navButtons = document.querySelectorAll(".nav");
+
+        navButtons.forEach(b => {
+            if (b.getAttribute("onclick")?.includes("'" + page + "'")) {
+                b.classList.add("active");
+            }
+        });
+    }
 
     const names = {
         home: "Tổng quan",
@@ -20,37 +42,58 @@ function showPage(page, button) {
         progress: "Tiến độ học tập"
     };
 
-    document.getElementById("current").textContent = names[page];
+    document.getElementById("current").textContent = names[page] || "";
 
     if (page === "math") {
-        setTimeout(drawGraph, 50);
+        requestAnimationFrame(drawGraph);
     }
 }
 
-// Đổi giao diện sáng / tối
+
+/* 2. CHUYỂN GIAO DIỆN SÁNG / TỐI */
+
 function toggleTheme() {
-    document.body.classList.toggle("dark");
-    localStorage.setItem(
-        "theme",
-        document.body.classList.contains("dark") ? "dark" : "light"
-    );
+    document.body.classList.toggle("light");
+
+    const isLight = document.body.classList.contains("light");
+
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+
+    document.getElementById("theme").textContent =
+        isLight ? "☾" : "☼";
 }
 
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
+// Khôi phục giao diện đã chọn
+
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+    document.body.classList.add("light");
+    document.getElementById("theme").textContent = "☾";
+} else {
+    document.body.classList.remove("light");
+    document.getElementById("theme").textContent = "☼";
 }
 
-// VẼ ĐỒ THỊ HÀM SỐ
+
+/* 3. VẼ ĐỒ THỊ HÀM SỐ */
+
 function drawGraph() {
     const canvas = document.getElementById("graph");
+
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
+
     const w = canvas.width;
     const h = canvas.height;
+
     const scale = 35;
 
     ctx.clearRect(0, 0, w, h);
+
+    // Nền đồ thị
+
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, w, h);
 
@@ -58,6 +101,7 @@ function drawGraph() {
     const cy = h / 2;
 
     // Lưới tọa độ
+
     ctx.strokeStyle = "#e8eaf0";
     ctx.lineWidth = 1;
 
@@ -76,28 +120,42 @@ function drawGraph() {
     }
 
     // Trục tọa độ
+
     ctx.strokeStyle = "#596579";
     ctx.lineWidth = 2;
 
     ctx.beginPath();
+
     ctx.moveTo(0, cy);
     ctx.lineTo(w, cy);
+
     ctx.moveTo(cx, 0);
     ctx.lineTo(cx, h);
+
     ctx.stroke();
 
     // Vẽ hàm số
-    try {
-        let expression = document.getElementById("equation").value
-            .replace(/\^/g, "**");
 
-        if (!/^[0-9xX+\-*/().\s*]+$/.test(expression)) {
+    const equation = document.getElementById("equation");
+
+    if (!equation) return;
+
+    try {
+        let expression = equation.value
+            .replace(/\^/g, "**")
+            .replace(/X/g, "x");
+
+        if (!expression.trim()) {
+            throw new Error("Chưa nhập hàm số");
+        }
+
+        if (!/^[0-9x+\-*/().\s*]+$/.test(expression)) {
             throw new Error("Biểu thức không hợp lệ");
         }
 
         const f = new Function(
             "x",
-            '"use strict"; return (' + expression.replace(/X/g, "x") + ');'
+            '"use strict"; return (' + expression + ');'
         );
 
         ctx.strokeStyle = "#6378dc";
@@ -107,15 +165,16 @@ function drawGraph() {
         let started = false;
 
         for (let px = 0; px <= w; px++) {
-            let x = (px - cx) / scale;
-            let y = f(x);
+            const x = (px - cx) / scale;
+
+            const y = f(x);
 
             if (!Number.isFinite(y) || Math.abs(y) > 1000) {
                 started = false;
                 continue;
             }
 
-            let py = cy - y * scale;
+            const py = cy - y * scale;
 
             if (!started) {
                 ctx.moveTo(px, py);
@@ -126,29 +185,44 @@ function drawGraph() {
         }
 
         ctx.stroke();
+
     } catch (error) {
-        alert("Hàm số không hợp lệ!");
+        ctx.fillStyle = "#d9534f";
+        ctx.font = "16px Arial";
+        ctx.fillText("Biểu thức hàm số không hợp lệ!", 20, 30);
     }
 }
+
+// Nhấn Enter để vẽ đồ thị
 
 document.getElementById("equation").addEventListener(
     "keydown",
     function(e) {
-        if (e.key === "Enter") drawGraph();
+        if (e.key === "Enter") {
+            drawGraph();
+        }
     }
 );
 
-// MÔ PHỎNG VẬT LÍ
+
+/* 4. MÔ PHỎNG VẬT LÍ */
+
 const speed = document.getElementById("speed");
 const duration = document.getElementById("duration");
 
+let physicsTimer = null;
+
 speed.oninput = updatePhysics;
-duration.oninput = updatePhysics;
+duration.oninput = function() {
+    stopPhysics();
+    updatePhysics();
+};
 
 function updatePhysics() {
-    let v = Number(speed.value);
-    let t = Number(duration.value);
-    let s = v * t;
+    const v = Number(speed.value);
+    const t = Number(duration.value);
+
+    const s = v * t;
 
     document.getElementById("speedValue").textContent = v;
     document.getElementById("timeValue").textContent = t;
@@ -159,39 +233,53 @@ function updatePhysics() {
         (t / 10 * 95) + "%";
 }
 
-function playPhysics() {
-    let t = Number(duration.value);
+function stopPhysics() {
+    if (physicsTimer !== null) {
+        clearInterval(physicsTimer);
+        physicsTimer = null;
+    }
+}
 
-    if (t >= 10) {
+function playPhysics() {
+    stopPhysics();
+
+    if (Number(duration.value) >= 10) {
         duration.value = 0;
+        updatePhysics();
     }
 
     let current = Number(duration.value);
 
-    let timer = setInterval(function() {
-        current += 0.1;
+    physicsTimer = setInterval(function() {
+        current = Math.min(current + 0.1, 10);
+
+        duration.value = current.toFixed(1);
+
+        updatePhysics();
 
         if (current >= 10) {
-            current = 10;
-            clearInterval(timer);
+            stopPhysics();
         }
-
-        duration.value = current;
-        updatePhysics();
     }, 100);
 }
 
 function resetPhysics() {
+    stopPhysics();
+
     duration.value = 0;
+
     updatePhysics();
 }
 
 updatePhysics();
 
-// TIN HỌC
+
+/* 5. PHÒNG TIN HỌC */
+
 function changeLanguage() {
-    let language = document.getElementById("language").value;
-    let code = document.getElementById("code");
+    const language = document.getElementById("language").value;
+
+    const code = document.getElementById("code");
 
     if (language === "cpp") {
         code.value =
@@ -210,7 +298,7 @@ int main()
 }
 
 function runCode() {
-    let language = document.getElementById("language").value;
+    const language = document.getElementById("language").value;
 
     document.getElementById("output").textContent =
         "Bạn đang sử dụng " +
@@ -223,5 +311,10 @@ function submitCode() {
         "Chức năng nộp bài và chấm test đang được phát triển.";
 }
 
-// Khởi tạo
-drawGraph();
+
+/* 6. KHỞI TẠO */
+
+window.addEventListener("load", function() {
+    drawGraph();
+    updatePhysics();
+});
