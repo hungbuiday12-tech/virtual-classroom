@@ -1,8 +1,9 @@
 
 /* =========================================
    VIRTUAL CLASSROOM
-   Minimal - Modern - Smooth Animation
+   BASIC STABLE VERSION
 ========================================= */
+
 
 /* 1. RESET */
 
@@ -13,7 +14,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
 }
 
 body {
@@ -21,8 +22,8 @@ body {
     background: #202b38;
     color: #e8edf3;
     min-height: 100vh;
-    transition: background 0.3s, color 0.3s;
 }
+
 
 /* 2. SIDEBAR */
 
@@ -30,20 +31,19 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 270px;
+    width: 250px;
     height: 100vh;
-    padding: 32px 22px;
+    padding: 28px 20px;
     background: #192633;
-    border-right: 1px solid rgba(255,255,255,0.07);
-    z-index: 100;
+    border-right: 1px solid #344454;
+    overflow-y: auto;
 }
 
 .logo {
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 800;
-    letter-spacing: 0.5px;
     color: #ffffff;
-    margin-bottom: 55px;
+    margin-bottom: 45px;
     white-space: nowrap;
 }
 
@@ -56,27 +56,26 @@ body {
     color: #8395a7;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
 }
 
 .nav {
     display: block;
     width: 100%;
-    padding: 13px 15px;
+    padding: 13px 14px;
     margin: 5px 0;
     border: none;
-    border-radius: 9px;
+    border-radius: 7px;
     background: transparent;
     color: #b9c6d3;
     font-size: 14px;
     text-align: left;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .nav:hover {
-    background: rgba(255,255,255,0.07);
-    color: white;
+    background: #293b4c;
+    color: #ffffff;
 }
 
 .nav.active {
@@ -85,25 +84,25 @@ body {
     font-weight: 600;
 }
 
-/* 3. MAIN CONTENT */
+
+/* 3. MAIN */
 
 main {
-    margin-left: 270px;
+    margin-left: 250px;
     min-height: 100vh;
-    padding: 0 45px;
-    position: relative;
-    z-index: 1;
+    padding: 0 35px;
 }
+
 
 /* 4. HEADER */
 
 header {
-    height: 75px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 35px;
+    border-bottom: 1px solid #344454;
+    margin-bottom: 30px;
     color: #aebdca;
     font-size: 14px;
 }
@@ -115,86 +114,41 @@ header b {
 #theme {
     width: 38px;
     height: 38px;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
+    border: 1px solid #506579;
+    border-radius: 8px;
     background: #2d4052;
     color: #ffffff;
     font-size: 19px;
     cursor: pointer;
-    transition: 0.2s;
 }
 
-#theme:hover {
-    background: #405a72;
-    transform: rotate(15deg);
-}
 
 /* 5. PAGE */
 
 .page {
     display: none;
-    animation: appear 0.35s ease;
 }
 
 .page.active {
     display: block;
 }
 
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 /* 6. HOME BANNER */
 
 .banner {
-    position: relative;
-    overflow: hidden;
-    padding: 45px;
-    min-height: 260px;
-    margin-bottom: 38px;
-    border-radius: 17px;
-
-    background: linear-gradient(
-        120deg,
-        #405d78,
-        #344a60
-    );
-
-    border: 1px solid rgba(255,255,255,0.08);
-}
-
-.banner::after {
-    content: "";
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    right: -70px;
-    bottom: -120px;
-    border-radius: 50%;
-    background: rgba(180,210,235,0.09);
-    animation: bannerFloat 7s ease-in-out infinite alternate;
-}
-
-@keyframes bannerFloat {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-25px);
-    }
+    padding: 40px;
+    min-height: 240px;
+    margin-bottom: 35px;
+    border-radius: 12px;
+    background: #344e66;
+    border: 1px solid #49627a;
 }
 
 .banner span,
 .intro span {
     display: block;
-    margin-bottom: 17px;
+    margin-bottom: 15px;
     color: #b9cee0;
     font-size: 12px;
     font-weight: 700;
@@ -204,47 +158,40 @@ header b {
 .banner h1 {
     margin-bottom: 15px;
     color: #ffffff;
-    font-size: 34px;
-    line-height: 1.35;
+    font-size: 32px;
+    line-height: 1.4;
 }
 
 .banner p {
     max-width: 620px;
     color: #d0dce6;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.8;
 }
+
 
 /* 7. SUBJECTS */
 
 main > #home > h2 {
     margin-bottom: 20px;
-    font-size: 23px;
+    font-size: 22px;
 }
 
 .subjects {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    gap: 18px;
 }
 
 .subject {
-    min-height: 235px;
-    padding: 25px;
+    min-height: 230px;
+    padding: 23px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
     background: #293a4b;
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
-
-    transition: transform 0.25s, background 0.25s;
-}
-
-.subject:hover {
-    transform: translateY(-5px);
-    background: #32485d;
+    border: 1px solid #405469;
+    border-radius: 12px;
 }
 
 .subject.math {
@@ -260,26 +207,25 @@ main > #home > h2 {
 }
 
 .symbol {
-    width: 48px;
-    height: 48px;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.08);
+    margin-bottom: 18px;
+    border-radius: 9px;
+    background: #34495c;
     color: #c4d8e9;
-    font-size: 25px;
-    font-weight: 600;
+    font-size: 24px;
 }
 
 .subject h3 {
     margin-bottom: 10px;
-    font-size: 19px;
+    font-size: 18px;
 }
 
 .subject p {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     color: #b6c4d1;
     font-size: 13px;
     line-height: 1.7;
@@ -287,37 +233,33 @@ main > #home > h2 {
 
 .subject button {
     margin-top: auto;
-    padding: 10px 15px;
+    padding: 10px 14px;
     border: none;
-    border-radius: 8px;
+    border-radius: 7px;
     background: #496b89;
     color: #ffffff;
     font-size: 13px;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .subject button:hover {
     background: #6289aa;
 }
 
+
 /* 8. INTRO */
 
 .intro {
-    padding: 32px;
-    margin-bottom: 25px;
-    border-radius: 15px;
-    background: linear-gradient(120deg, #344d64, #2d4052);
-    border: 1px solid rgba(255,255,255,0.08);
-}
-
-.intro span {
-    margin-bottom: 12px;
+    padding: 30px;
+    margin-bottom: 22px;
+    border-radius: 12px;
+    background: #344d64;
+    border: 1px solid #49627a;
 }
 
 .intro h1 {
     margin-bottom: 10px;
-    font-size: 29px;
+    font-size: 28px;
     color: #ffffff;
 }
 
@@ -326,19 +268,20 @@ main > #home > h2 {
     line-height: 1.7;
 }
 
+
 /* 9. PANELS */
 
 .panel {
-    padding: 25px;
-    margin-bottom: 22px;
-    border-radius: 14px;
+    padding: 23px;
+    margin-bottom: 20px;
+    border-radius: 12px;
     background: #293a4b;
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid #405469;
 }
 
 .panel h2 {
-    margin-bottom: 16px;
-    font-size: 20px;
+    margin-bottom: 15px;
+    font-size: 19px;
 }
 
 .panel p {
@@ -347,63 +290,48 @@ main > #home > h2 {
     line-height: 1.7;
 }
 
+
 /* 10. INPUTS AND BUTTONS */
 
 .controls {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     margin: 18px 0;
     flex-wrap: wrap;
 }
 
 input,
 select,
-textarea {
+textarea,
+button {
     font-family: inherit;
 }
 
 .controls input,
 .panel select {
     min-width: 180px;
-    padding: 11px 13px;
+    padding: 11px;
     border: 1px solid #506579;
-    border-radius: 8px;
+    border-radius: 7px;
     outline: none;
     background: #1e2d3b;
     color: #ffffff;
 }
 
-.controls input:focus,
-.panel select:focus {
-    border-color: #8eafcc;
-}
-
-button {
-    font-family: inherit;
-}
-
 .panel button {
-    padding: 11px 17px;
+    padding: 10px 16px;
     margin: 8px 5px 8px 0;
     border: none;
-    border-radius: 8px;
+    border-radius: 7px;
     background: #547b9d;
-    color: white;
+    color: #ffffff;
     cursor: pointer;
-    transition: 0.2s;
-}
-
-.panel button:hover {
-    background: #6b94b7;
 }
 
 .panel button.secondary {
     background: #465767;
 }
 
-.panel button.secondary:hover {
-    background: #596e81;
-}
 
 /* 11. GRAPH */
 
@@ -411,41 +339,37 @@ button {
     display: block;
     width: 100%;
     height: auto;
-    margin: 20px 0;
-    border-radius: 10px;
-    background: #f8fafc;
+    margin: 18px 0;
+    border-radius: 8px;
+    background: #ffffff;
     border: 1px solid #dce4eb;
 }
 
 .hint {
-    margin-top: 12px;
+    margin-top: 10px;
     color: #91a5b8 !important;
     font-size: 12px !important;
 }
 
+
 /* 12. LESSONS */
 
 .lesson {
-    padding: 16px 18px;
+    padding: 15px;
     margin-top: 10px;
-    border-radius: 9px;
+    border-radius: 7px;
     background: #34495c;
     color: #dce6ee;
     font-size: 14px;
-    transition: 0.2s;
 }
 
-.lesson:hover {
-    background: #405970;
-    transform: translateX(4px);
-}
 
-/* 13. PHYSICS SIMULATION */
+/* 13. PHYSICS */
 
 .simulation {
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 12px;
+    padding: 18px;
+    margin: 18px 0;
+    border-radius: 10px;
     background: #203142;
 }
 
@@ -467,19 +391,18 @@ button {
     justify-content: center;
     border-radius: 50%;
     background: #78a9d1;
-    color: white;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    color: #ffffff;
 }
 
 .values {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
 }
 
 .values span {
-    padding: 12px 15px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 7px;
     background: #30465a;
     color: #c7d4e0;
     font-size: 14px;
@@ -502,8 +425,8 @@ button {
     max-width: 500px;
     margin-bottom: 15px;
     accent-color: #80a9ca;
-    cursor: pointer;
 }
+
 
 /* 14. INFORMATICS */
 
@@ -513,41 +436,33 @@ button {
     margin-bottom: 18px;
     padding: 10px;
     border: 1px solid #506579;
-    border-radius: 8px;
+    border-radius: 7px;
     background: #1e2d3b;
-    color: white;
+    color: #ffffff;
 }
 
 #code {
     display: block;
     width: 100%;
-    min-height: 320px;
+    min-height: 300px;
     margin-bottom: 15px;
-    padding: 18px;
-
+    padding: 17px;
     resize: vertical;
     outline: none;
     border: 1px solid #506579;
-    border-radius: 10px;
-
+    border-radius: 8px;
     background: #172431;
     color: #d8e6f3;
-
     font-family: Consolas, monospace;
     font-size: 14px;
-    line-height: 1.7;
-    tab-size: 4;
-}
-
-#code:focus {
-    border-color: #8eafcc;
+    line-height: 1.6;
 }
 
 .terminal {
-    min-height: 120px;
-    margin-top: 20px;
-    padding: 17px;
-    border-radius: 10px;
+    min-height: 110px;
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 8px;
     background: #172431;
     color: #9ec5aa;
     font-family: Consolas, monospace;
@@ -557,10 +472,9 @@ button {
 
 .terminal span {
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     color: #8ea5b9;
     font-size: 11px;
-    letter-spacing: 1px;
 }
 
 .terminal pre {
@@ -568,17 +482,18 @@ button {
     overflow-wrap: anywhere;
 }
 
+
 /* 15. FOOTER */
 
 footer {
-    padding: 30px 0;
-    margin-top: 35px;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 25px 0;
+    margin-top: 30px;
+    border-top: 1px solid #344454;
     color: #8395a7;
     text-align: center;
     font-size: 12px;
-    letter-spacing: 1px;
 }
+
 
 /* 16. LIGHT MODE */
 
@@ -633,17 +548,20 @@ body.light #theme {
     border-color: #dce4eb;
 }
 
-body.light .banner {
-    background: linear-gradient(120deg, #d9e8f3, #e8eff5);
+body.light .banner,
+body.light .intro {
+    background: #dce9f2;
     border-color: #d7e2eb;
 }
 
 body.light .banner span,
-body.light .banner h1 {
+body.light .banner h1,
+body.light .intro h1 {
     color: #304b63;
 }
 
-body.light .banner p {
+body.light .banner p,
+body.light .intro p {
     color: #5c7185;
 }
 
@@ -668,30 +586,9 @@ body.light .symbol {
     color: #547b9d;
 }
 
-body.light .intro {
-    background: linear-gradient(120deg, #dce9f2, #edf2f6);
-    border-color: #dce4eb;
-}
-
-body.light .intro span {
-    color: #6689aa;
-}
-
-body.light .intro h1 {
-    color: #263747;
-}
-
-body.light .intro p {
-    color: #647587;
-}
-
 body.light .lesson {
     background: #edf2f6;
     color: #40576b;
-}
-
-body.light .lesson:hover {
-    background: #e1ebf3;
 }
 
 body.light .simulation {
@@ -719,64 +616,21 @@ body.light #language {
     border-color: #cbd6df;
 }
 
-body.light #code,
-body.light .terminal {
-    background: #202c38;
-    color: #d8e6f3;
-}
-
 body.light footer {
     border-color: #dce4eb;
     color: #8190a0;
 }
 
-/* 17. BACKGROUND ANIMATION */
 
-body::before,
-body::after {
-    content: "";
-    position: fixed;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    filter: blur(110px);
-    opacity: 0.09;
-    pointer-events: none;
-    z-index: -1;
-}
+/* 17. RESPONSIVE */
 
-body::before {
-    top: 5%;
-    right: 5%;
-    background: #7ca8cc;
-    animation: softMove 18s ease-in-out infinite alternate;
-}
-
-body::after {
-    bottom: 0;
-    left: 25%;
-    background: #7ba995;
-    animation: softMove 22s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes softMove {
-    from {
-        transform: translate(0, 0);
-    }
-    to {
-        transform: translate(35px, -25px);
-    }
-}
-
-/* 18. RESPONSIVE */
-
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
     .subjects {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     main {
-        padding: 0 30px;
+        padding: 0 25px;
     }
 }
 
@@ -785,11 +639,11 @@ body::after {
         position: relative;
         width: 100%;
         height: auto;
-        padding: 20px;
+        padding: 18px;
     }
 
     .logo {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
 
     .nav-title {
@@ -799,18 +653,18 @@ body::after {
     .nav {
         display: inline-block;
         width: auto;
-        margin-right: 5px;
+        margin-right: 4px;
         padding: 10px;
     }
 
     main {
         margin-left: 0;
-        padding: 0 18px;
+        padding: 0 15px;
     }
 
     header {
         height: 60px;
-        margin-bottom: 22px;
+        margin-bottom: 20px;
     }
 
     .subjects {
@@ -818,34 +672,22 @@ body::after {
     }
 
     .banner {
-        padding: 28px;
+        padding: 25px;
     }
 
     .banner h1 {
-        font-size: 27px;
+        font-size: 26px;
     }
 
     .intro {
-        padding: 24px;
+        padding: 22px;
     }
 
     .intro h1 {
-        font-size: 24px;
+        font-size: 23px;
     }
 
     .panel {
-        padding: 18px;
-    }
-}
-
-/* 19. REDUCE MOTION */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto !important;
+        padding: 17px;
     }
 }
