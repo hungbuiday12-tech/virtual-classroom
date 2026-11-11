@@ -691,3 +691,166 @@ body.light footer {
         padding: 17px;
     }
 }
+
+/* =========================================
+   TOP NAVIGATION
+========================================= */
+
+body {
+    padding-top: 75px;
+}
+
+/* Thanh điều hướng */
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    padding: 0 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+
+    background: #192633;
+    border-bottom: 1px solid #344454;
+    z-index: 1000;
+}
+
+/* Logo */
+
+.topbar .logo {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 19px;
+}
+
+/* Nhóm điều hướng */
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Nút điều hướng */
+
+.top-nav .nav {
+    width: auto;
+    margin: 0;
+    padding: 11px 17px;
+    white-space: nowrap;
+}
+
+/* Nhóm tài khoản */
+
+.account {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.account button {
+    padding: 10px 15px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.login-btn {
+    background: transparent;
+    border: 1px solid #60788e;
+    color: #e8edf3;
+}
+
+.register-btn {
+    background: #547b9d;
+    border: 1px solid #547b9d;
+    color: white;
+}
+
+.account #theme {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+}
+
+/* Nội dung chính */
+
+main {
+    margin-left: 0;
+    padding: 0 35px;
+    max-width: 1600px;
+    margin-right: auto;
+}
+
+/* Giao diện sáng */
+
+body.light .topbar {
+    background: #ffffff;
+    border-color: #dce4eb;
+}
+
+body.light .login-btn {
+    color: #40576b;
+    border-color: #cbd6df;
+}
+
+body.light .register-btn {
+    background: #547b9d;
+    color: white;
+}
+
+/* Màn hình nhỏ */
+
+@media (max-width: 850px) {
+    body {
+        padding-top: 125px;
+    }
+
+    .topbar {
+        height: auto;
+        min-height: 125px;
+        padding: 12px 18px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .topbar .logo {
+        font-size: 17px;
+    }
+
+    .top-nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .top-nav .nav {
+        padding: 9px 13px;
+    }
+
+    .account {
+        margin-left: auto;
+    }
+
+    main {
+        padding: 0 18px;
+    }
+}
+
+@media (max-width: 420px) {
+    .account {
+        gap: 5px;
+    }
+
+    .account button {
+        padding: 8px 9px;
+        font-size: 12px;
+    }
+}
+
