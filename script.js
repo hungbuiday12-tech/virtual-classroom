@@ -1,7 +1,9 @@
 
 /* =====================================
-   VIRTUAL CLASSROOM - JAVASCRIPT
+   VIRTUAL CLASSROOM
+   JAVASCRIPT
 ===================================== */
+
 
 /* 1. CHUYỂN TRANG */
 
@@ -25,9 +27,7 @@ function showPage(page, button) {
     if (button) {
         button.classList.add("active");
     } else {
-        const navButtons = document.querySelectorAll(".nav");
-
-        navButtons.forEach(b => {
+        document.querySelectorAll(".nav").forEach(b => {
             if (b.getAttribute("onclick")?.includes("'" + page + "'")) {
                 b.classList.add("active");
             }
@@ -50,7 +50,7 @@ function showPage(page, button) {
 }
 
 
-/* 2. CHUYỂN GIAO DIỆN SÁNG / TỐI */
+/* 2. GIAO DIỆN SÁNG / TỐI */
 
 function toggleTheme() {
     document.body.classList.toggle("light");
@@ -61,18 +61,6 @@ function toggleTheme() {
 
     document.getElementById("theme").textContent =
         isLight ? "☾" : "☼";
-}
-
-// Khôi phục giao diện đã chọn
-
-const savedTheme = localStorage.getItem("theme");
-
-if (savedTheme === "light") {
-    document.body.classList.add("light");
-    document.getElementById("theme").textContent = "☾";
-} else {
-    document.body.classList.remove("light");
-    document.getElementById("theme").textContent = "☼";
 }
 
 
@@ -134,7 +122,7 @@ function drawGraph() {
 
     ctx.stroke();
 
-    // Vẽ hàm số
+    // Lấy biểu thức
 
     const equation = document.getElementById("equation");
 
@@ -143,13 +131,17 @@ function drawGraph() {
     try {
         let expression = equation.value
             .replace(/\^/g, "**")
-            .replace(/X/g, "x");
+            .replace(/X/g, "x")
+            .trim();
 
-        if (!expression.trim()) {
-            throw new Error("Chưa nhập hàm số");
+        if (expression === "") {
+            throw new Error("Chưa nhập biểu thức");
         }
 
-        if (!/^[0-9x+\-*/().\s*]+$/.test(expression)) {
+        // KIỂM TRA BIỂU THỨC
+        // Đã sửa lỗi cú pháp regex
+
+        if (!/^[0-9x+\-*\/().\s]+$/.test(expression)) {
             throw new Error("Biểu thức không hợp lệ");
         }
 
@@ -157,6 +149,8 @@ function drawGraph() {
             "x",
             '"use strict"; return (' + expression + ');'
         );
+
+        // Vẽ đồ thị
 
         ctx.strokeStyle = "#6378dc";
         ctx.lineWidth = 3;
@@ -166,7 +160,6 @@ function drawGraph() {
 
         for (let px = 0; px <= w; px++) {
             const x = (px - cx) / scale;
-
             const y = f(x);
 
             if (!Number.isFinite(y) || Math.abs(y) > 1000) {
@@ -175,6 +168,11 @@ function drawGraph() {
             }
 
             const py = cy - y * scale;
+
+            if (py < -1000 || py > h + 1000) {
+                started = false;
+                continue;
+            }
 
             if (!started) {
                 ctx.moveTo(px, py);
@@ -193,32 +191,17 @@ function drawGraph() {
     }
 }
 
-// Nhấn Enter để vẽ đồ thị
-
-document.getElementById("equation").addEventListener(
-    "keydown",
-    function(e) {
-        if (e.key === "Enter") {
-            drawGraph();
-        }
-    }
-);
-
 
 /* 4. MÔ PHỎNG VẬT LÍ */
 
-const speed = document.getElementById("speed");
-const duration = document.getElementById("duration");
-
 let physicsTimer = null;
 
-speed.oninput = updatePhysics;
-duration.oninput = function() {
-    stopPhysics();
-    updatePhysics();
-};
-
 function updatePhysics() {
+    const speed = document.getElementById("speed");
+    const duration = document.getElementById("duration");
+
+    if (!speed || !duration) return;
+
     const v = Number(speed.value);
     const t = Number(duration.value);
 
@@ -241,6 +224,10 @@ function stopPhysics() {
 }
 
 function playPhysics() {
+    const duration = document.getElementById("duration");
+
+    if (!duration) return;
+
     stopPhysics();
 
     if (Number(duration.value) >= 10) {
@@ -264,6 +251,10 @@ function playPhysics() {
 }
 
 function resetPhysics() {
+    const duration = document.getElementById("duration");
+
+    if (!duration) return;
+
     stopPhysics();
 
     duration.value = 0;
@@ -271,14 +262,11 @@ function resetPhysics() {
     updatePhysics();
 }
 
-updatePhysics();
-
 
 /* 5. PHÒNG TIN HỌC */
 
 function changeLanguage() {
     const language = document.getElementById("language").value;
-
     const code = document.getElementById("code");
 
     if (language === "cpp") {
@@ -291,6 +279,7 @@ int main()
     cout << "Hello World!";
     return 0;
 }`;
+
     } else {
         code.value =
 `print("Hello World!")`;
@@ -312,9 +301,53 @@ function submitCode() {
 }
 
 
-/* 6. KHỞI TẠO */
+/* 6. KHỞI TẠO WEBSITE */
 
-window.addEventListener("load", function() {
-    drawGraph();
+document.addEventListener("DOMContentLoaded", function() {
+
+    // Khôi phục giao diện
+
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light");
+        document.getElementById("theme").textContent = "☾";
+    } else {
+        document.body.classList.remove("light");
+        document.getElementById("theme").textContent = "☼";
+    }
+
+    // Sự kiện đồ thị
+
+    const equation = document.getElementById("equation");
+
+    if (equation) {
+        equation.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                drawGraph();
+            }
+        });
+    }
+
+    // Sự kiện mô phỏng vật lí
+
+    const speed = document.getElementById("speed");
+    const duration = document.getElementById("duration");
+
+    if (speed) {
+        speed.addEventListener("input", updatePhysics);
+    }
+
+    if (duration) {
+        duration.addEventListener("input", function() {
+            stopPhysics();
+            updatePhysics();
+        });
+    }
+
+    // Khởi tạo
+
     updatePhysics();
+    drawGraph();
+
 });
