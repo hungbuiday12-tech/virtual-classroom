@@ -1,907 +1,187 @@
 
-/* =========================================
-   VIRTUAL CLASSROOM - STYLE
-   Giao diện lớp học trực tuyến tối giản
-========================================= */
-
-/* ===== 1. RESET ===== */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    min-height: 100vh;
-    color: #e8edf3;
-    background: #202b38;
-    overflow-x: hidden;
-    position: relative;
-}
-
-/* ===== 2. NỀN ĐỘNG ===== */
-
-.background-3d {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-
-    background: linear-gradient(
-        120deg,
-        #202b38,
-        #293747,
-        #263542,
-        #202b38
-    );
-
-    background-size: 300% 300%;
-    animation: backgroundMove 25s ease infinite;
-}
-
-/* Ẩn các hiệu ứng vũ trụ cũ */
-
-.background-3d .stars,
-.background-3d .planet,
-.background-3d .orb,
-.background-3d .grid-floor {
-    display: none;
-}
-
-/* Ánh sáng nền nhẹ */
-
-.background-3d::before,
-.background-3d::after {
-    content: "";
-    position: absolute;
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    filter: blur(110px);
-    opacity: 0.13;
-    animation: floatLight 18s ease-in-out infinite alternate;
-}
-
-.background-3d::before {
-    background: #7199bb;
-    top: 5%;
-    left: 5%;
-}
-
-.background-3d::after {
-    background: #83a99b;
-    bottom: 0;
-    right: 5%;
-    animation-delay: -9s;
-}
-
-@keyframes backgroundMove {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-}
-
-@keyframes floatLight {
-    from {
-        transform: translate(0, 0);
-    }
-
-    to {
-        transform: translate(35px, -25px);
-    }
-}
-
-/* ===== 3. THANH ĐIỀU HƯỚNG ===== */
-
-.topbar {
-    width: 100%;
-    min-height: 75px;
-    padding: 0 6%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-
-    position: sticky;
-    top: 0;
-    z-index: 100;
-
-    background: rgba(27, 37, 49, 0.88);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(15px);
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 20px;
-    font-weight: 700;
-    color: #f1f5f9;
-    white-space: nowrap;
-}
-
-.brand-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background: #354b61;
-    font-size: 21px;
-}
-
-.top-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.top-link {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 9px;
-    background: transparent;
-    color: #c5d0dc;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.25s;
-}
-
-.top-link:hover,
-.top-link.active {
-    background: rgba(129, 164, 195, 0.16);
-    color: #ffffff;
-}
-
-.top-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.top-actions button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 9px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.25s;
-}
-
-.theme-button {
-    background: rgba(255,255,255,0.1);
-    color: #ffffff;
-}
-
-.login-button {
-    background: transparent;
-    color: #e2e8f0;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-}
-
-.register-button {
-    background: #6689aa;
-    color: white;
-}
-
-.top-actions button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.12);
-}
-
-/* ===== 4. SIDEBAR ===== */
-
-.sidebar {
-    width: 250px;
-    min-height: calc(100vh - 75px);
-    padding: 25px 18px;
-    background: rgba(25, 35, 47, 0.75);
-    border-right: 1px solid rgba(255,255,255,0.07);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 30px;
-}
-
-.nav {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.nav button,
-.nav a {
-    width: 100%;
-    padding: 13px 15px;
-    border: none;
-    border-radius: 10px;
-    text-align: left;
-    color: #bdc9d6;
-    background: transparent;
-    font-size: 15px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: 0.2s;
-}
-
-.nav button:hover,
-.nav a:hover,
-.nav .active {
-    color: white;
-    background: rgba(115, 151, 184, 0.2);
-}
-
-/* ===== 5. KHU VỰC NỘI DUNG ===== */
-
-main {
-    width: 100%;
-    max-width: 1250px;
-    margin: 0 auto;
-    padding: 35px 5%;
-}
-
-.page {
-    display: none;
-    animation: pageAppear 0.35s ease;
-}
-
-.page.active {
-    display: block;
-}
-
-@keyframes pageAppear {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ===== 6. TRANG CHỦ ===== */
-
-.banner {
-    padding: 40px;
-    margin-bottom: 30px;
-    border-radius: 20px;
-
-    background: linear-gradient(
-        120deg,
-        rgba(75, 105, 133, 0.75),
-        rgba(54, 76, 98, 0.75)
-    );
-
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.banner h1 {
-    font-size: 32px;
-    margin-bottom: 12px;
-    color: #ffffff;
-}
-
-.banner p {
-    color: #d4dee8;
-    line-height: 1.7;
-    font-size: 16px;
-}
-
-.section-heading {
-    margin: 30px 0 20px;
-}
-
-.section-heading h2 {
-    font-size: 23px;
-    margin-bottom: 8px;
-}
-
-.section-heading p {
-    color: #aebdcb;
-}
-
-/* ===== 7. DANH SÁCH MÔN HỌC ===== */
-
-.subjects {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.subject {
-    padding: 25px;
-    min-height: 190px;
-    border-radius: 16px;
-
-    background: rgba(39, 53, 68, 0.85);
-    border: 1px solid rgba(255,255,255,0.09);
-
-    cursor: pointer;
-    transition: 0.25s;
-}
-
-.subject:hover {
-    transform: translateY(-5px);
-    background: rgba(53, 72, 91, 0.95);
-    border-color: rgba(160, 190, 215, 0.3);
-}
-
-.subject .icon {
-    font-size: 30px;
-    margin-bottom: 15px;
-}
-
-.subject h3 {
-    font-size: 19px;
-    margin-bottom: 10px;
-}
-
-.subject p {
-    color: #b5c2cf;
-    line-height: 1.6;
-    font-size: 14px;
-}
-
-.subject.math {
-    border-top: 3px solid #78a9d3;
-}
-
-.subject.physics {
-    border-top: 3px solid #80b6a2;
-}
-
-.subject.coding {
-    border-top: 3px solid #c5a77c;
-}
-
-/* ===== 8. CÁC KHUNG NỘI DUNG ===== */
-
-.panel {
-    padding: 25px;
-    margin-bottom: 22px;
-    border-radius: 15px;
-
-    background: rgba(39, 53, 68, 0.88);
-    border: 1px solid rgba(255,255,255,0.08);
-}
-
-.panel h2,
-.panel h3 {
-    margin-bottom: 15px;
-}
-
-.panel p {
-    color: #bdc9d6;
-    line-height: 1.7;
-}
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 18px 0;
-}
-
-input,
-select,
-textarea {
-    font-family: inherit;
-}
-
-.controls input,
-.controls select {
-    padding: 11px 13px;
-    border-radius: 8px;
-    border: 1px solid #526477;
-    background: #253444;
-    color: #ffffff;
-    outline: none;
-}
-
-.controls button,
-.panel button {
-    padding: 11px 18px;
-    border: none;
-    border-radius: 8px;
-    background: #6689aa;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.controls button:hover,
-.panel button:hover {
-    background: #7b9fbe;
-}
-
-/* ===== 9. PHÒNG TOÁN ===== */
-
-#graph {
-    width: 100%;
-    max-width: 100%;
-    height: 350px;
-    display: block;
-    margin-top: 20px;
-    border-radius: 12px;
-    background: #f8fafc;
-    border: 1px solid #d7e0e8;
-}
-
-.lesson {
-    padding: 18px;
-    margin: 12px 0;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.05);
-}
-
-.lesson h3 {
-    margin-bottom: 8px;
-}
-
-/* ===== 10. PHÒNG VẬT LÍ ===== */
-
-.simulation {
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 13px;
-    background: rgba(255,255,255,0.05);
-}
-
-.track {
-    position: relative;
-    width: 100%;
-    height: 90px;
-    margin: 25px 0;
-    border-bottom: 3px solid #9aaabd;
-}
-
-#object {
-    position: absolute;
-    bottom: 5px;
-    left: 0;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: #83b5d9;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-}
-
-.values {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.values div {
-    flex: 1;
-    min-width: 130px;
-    padding: 15px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.07);
-}
-
-.values span {
-    display: block;
-    margin-top: 8px;
-    font-size: 20px;
-    font-weight: 700;
-    color: #9dc4e2;
-}
-
-/* ===== 11. PHÒNG TIN HỌC ===== */
-
-#code {
-    width: 100%;
-    min-height: 280px;
-    padding: 18px;
-
-    resize: vertical;
-    outline: none;
-    border: 1px solid #536477;
-    border-radius: 10px;
-
-    background: #172330;
-    color: #d8e6f3;
-
-    font-family: Consolas, monospace;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.terminal {
-    min-height: 100px;
-    padding: 18px;
-    margin-top: 15px;
-    border-radius: 10px;
-    background: #172330;
-    color: #a8c7b5;
-    font-family: Consolas, monospace;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
-
-/* ===== 12. TIẾN ĐỘ HỌC TẬP ===== */
-
-.intro {
-    padding: 25px;
-    margin-bottom: 25px;
-    border-radius: 15px;
-    background: rgba(74, 104, 132, 0.25);
-}
-
-.secondary {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-
-.secondary .panel {
-    margin: 0;
-}
-
-/* ===== 13. FOOTER ===== */
-
-footer {
-    padding: 25px;
-    margin-top: 40px;
-    text-align: center;
-    color: #9eacba;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    font-size: 14px;
-}
-
-/* ===== 14. ĐĂNG NHẬP / ĐĂNG KÝ ===== */
-
-.auth-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-
-    display: none;
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-    background: rgba(0,0,0,0.65);
-    backdrop-filter: blur(5px);
-}
-
-.auth-overlay.show {
-    display: flex;
-}
-
-.auth-box {
-    width: 100%;
-    max-width: 420px;
-    padding: 30px;
-    border-radius: 18px;
-
-    background: #29394a;
-    border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
-
-.auth-box h2 {
-    margin-bottom: 10px;
-}
-
-.auth-box p {
-    color: #b8c6d4;
-    margin-bottom: 20px;
-}
-
-.auth-box input {
-    width: 100%;
-    padding: 13px;
-    margin-bottom: 13px;
-
-    border: 1px solid #526477;
-    border-radius: 9px;
-
-    background: #1e2c3a;
-    color: white;
-    outline: none;
-}
-
-.auth-box button {
-    width: 100%;
-    padding: 13px;
-    margin-top: 8px;
-
-    border: none;
-    border-radius: 9px;
-    background: #6689aa;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
-}
-
-.auth-box button:hover {
-    background: #7b9fbe;
-}
-
-.auth-close {
-    float: right;
-    border: none;
-    background: transparent;
-    color: #dce5ed;
-    font-size: 23px;
-    cursor: pointer;
-}
-
-/* ===== 15. GIAO DIỆN SÁNG ===== */
-
-body.light {
-    background: #edf1f5;
-    color: #253343;
-}
-
-body.light .background-3d {
-    background: linear-gradient(
-        120deg,
-        #e9eff5,
-        #f5f7f9,
-        #e5edf3
-    );
-    background-size: 300% 300%;
-}
-
-body.light .background-3d::before {
-    background: #a6c5df;
-    opacity: 0.2;
-}
-
-body.light .background-3d::after {
-    background: #b5d4c5;
-    opacity: 0.2;
-}
-
-body.light .topbar {
-    background: rgba(255,255,255,0.88);
-    border-bottom: 1px solid #dce3e9;
-}
-
-body.light .brand {
-    color: #263747;
-}
-
-body.light .brand-icon {
-    background: #e1eaf2;
-}
-
-body.light .top-link {
-    color: #536477;
-}
-
-body.light .top-link:hover,
-body.light .top-link.active {
-    color: #263747;
-    background: #e5edf4;
-}
-
-body.light .theme-button {
-    background: #e6edf3;
-    color: #35485b;
-}
-
-body.light .login-button {
-    color: #35485b;
-    border-color: #cbd5df !important;
-}
-
-body.light .register-button {
-    background: #6689aa;
-    color: white;
-}
-
-body.light .banner {
-    background: linear-gradient(
-        120deg,
-        #d9e7f1,
-        #e8eef3
-    );
-    border-color: #d5e0e8;
-}
-
-body.light .banner h1 {
-    color: #263747;
-}
-
-body.light .banner p {
-    color: #526477;
-}
-
-body.light .section-heading p {
-    color: #68798a;
-}
-
-body.light .subject,
-body.light .panel {
-    background: rgba(255,255,255,0.85);
-    border: 1px solid #dce4eb;
-    color: #263747;
-}
-
-body.light .subject:hover {
-    background: #ffffff;
-    border-color: #aebfce;
-}
-
-body.light .subject p,
-body.light .panel p {
-    color: #647587;
-}
-
-body.light .lesson,
-body.light .simulation,
-body.light .values div {
-    background: #edf2f6;
-}
-
-body.light .values span {
-    color: #527fa4;
-}
-
-body.light .intro {
-    background: #e1ebf3;
-}
-
-body.light footer {
-    color: #758494;
-    border-color: #dce4eb;
-}
-
-body.light .sidebar {
-    background: rgba(255,255,255,0.8);
-    border-color: #dce4eb;
-}
-
-body.light .nav button,
-body.light .nav a {
-    color: #536477;
-}
-
-body.light .nav button:hover,
-body.light .nav a:hover,
-body.light .nav .active {
-    color: #263747;
-    background: #e5edf4;
-}
-
-body.light .controls input,
-body.light .controls select {
-    background: white;
-    color: #263747;
-    border-color: #cbd5df;
-}
-
-body.light .auth-box {
-    background: white;
-    color: #263747;
-}
-
-body.light .auth-box p {
-    color: #68798a;
-}
-
-body.light .auth-box input {
-    background: #f4f7fa;
-    color: #263747;
-    border-color: #d5dfe8;
-}
-
-body.light .auth-close {
-    color: #526477;
-}
-
-/* ===== 16. RESPONSIVE ===== */
-
-@media (max-width: 950px) {
-    .topbar {
-        padding: 12px 4%;
-        flex-wrap: wrap;
-    }
-
-    .top-nav {
-        order: 3;
-        width: 100%;
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding-bottom: 5px;
-    }
-
-    .subjects {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    main {
-        padding: 25px 4%;
-    }
-}
-
-@media (max-width: 600px) {
-    .topbar {
-        gap: 12px;
-    }
-
-    .brand {
-        font-size: 17px;
-    }
-
-    .top-actions {
-        gap: 6px;
-    }
-
-    .top-actions button {
-        padding: 9px 10px;
-        font-size: 12px;
-    }
-
-    .top-link {
-        padding: 9px 12px;
-        font-size: 13px;
-        white-space: nowrap;
-    }
-
-    .subjects {
-        grid-template-columns: 1fr;
-    }
-
-    .secondary {
-        grid-template-columns: 1fr;
-    }
-
-    .banner {
-        padding: 25px;
-    }
-
-    .banner h1 {
-        font-size: 25px;
-    }
-
-    .panel {
-        padding: 18px;
-    }
-
-    #graph {
-        height: 260px;
-    }
-
-    .values {
-        flex-direction: column;
-    }
-}
-
-/* ===== 17. GIẢM CHUYỂN ĐỘNG ===== */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Classroom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">VIRTUAL<span>CLASSROOM</span></div>
+
+    <p class="nav-title">KHÔNG GIAN HỌC TẬP</p>
+    <button class="nav active" onclick="showPage('home',this)">⌂ Tổng quan</button>
+    <button class="nav" onclick="showPage('math',this)">∑ Phòng Toán</button>
+    <button class="nav" onclick="showPage('physics',this)">◉ Phòng Vật lí</button>
+    <button class="nav" onclick="showPage('informatics',this)">⌘ Phòng Tin học</button>
+
+    <p class="nav-title">CÁ NHÂN</p>
+    <button class="nav" onclick="showPage('progress',this)">▥ Tiến độ học tập</button>
+</aside>
+
+<main>
+    <header>
+        <span>Không gian học tập / <b id="current">Tổng quan</b></span>
+        <button id="theme" onclick="toggleTheme()">☼</button>
+    </header>
+
+    <section id="home" class="page active">
+        <div class="banner">
+            <span>VIRTUAL CLASSROOM</span>
+            <h1>Mỗi ngày học tập,<br>mỗi ngày tiến bộ.</h1>
+            <p>Khám phá kiến thức, thực hành và phát triển kỹ năng trong không gian học tập trực tuyến.</p>
+        </div>
+
+        <h2>Chọn phòng học</h2>
+        <div class="subjects">
+            <div class="subject math">
+                <div class="symbol">∑</div>
+                <h3>Toán học</h3>
+                <p>Đồ thị hàm số, hình học và hệ thống bài giảng.</p>
+                <button onclick="showPage('math')">Vào lớp học →</button>
+            </div>
+
+            <div class="subject physics">
+                <div class="symbol">◉</div>
+                <h3>Vật lí</h3>
+                <p>Bài giảng và các mô phỏng thí nghiệm 2D.</p>
+                <button onclick="showPage('physics')">Vào lớp học →</button>
+            </div>
+
+            <div class="subject coding">
+                <div class="symbol">&lt;/&gt;</div>
+                <h3>Tin học</h3>
+                <p>Lập trình C++, Python và luyện tập thuật toán.</p>
+                <button onclick="showPage('informatics')">Vào lớp học →</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="math" class="page">
+        <div class="intro">
+            <span>MATHEMATICS CLASSROOM</span>
+            <h1>Phòng học Toán</h1>
+            <p>Trực quan hóa kiến thức và thực hành toán học.</p>
+        </div>
+
+        <div class="panel">
+            <h2>Công cụ vẽ đồ thị hàm số</h2>
+            <p>Nhập biểu thức theo biến x.</p>
+            <div class="controls">
+                <input id="equation" value="x*x" placeholder="Ví dụ: x*x">
+                <button onclick="drawGraph()">Vẽ đồ thị</button>
+            </div>
+            <canvas id="graph" width="900" height="430"></canvas>
+            <p class="hint">Ví dụ: x*x, 2*x+1, x*x-4, 0.5*x*x</p>
+        </div>
+
+        <div class="panel">
+            <h2>Thư viện bài giảng</h2>
+            <div class="lesson">Bài 1. Hàm số bậc nhất</div>
+            <div class="lesson">Bài 2. Hàm số bậc hai</div>
+            <div class="lesson">Bài 3. Phương trình và hệ phương trình</div>
+            <div class="lesson">Bài 4. Hình học</div>
+        </div>
+    </section>
+
+    <section id="physics" class="page">
+        <div class="intro">
+            <span>PHYSICS CLASSROOM</span>
+            <h1>Phòng học Vật lí</h1>
+            <p>Khám phá các hiện tượng vật lí qua mô phỏng tương tác.</p>
+        </div>
+
+        <div class="panel">
+            <h2>Mô phỏng chuyển động thẳng đều</h2>
+            <div class="simulation">
+                <div class="track">
+                    <div id="object">●</div>
+                </div>
+                <div class="values">
+                    <span>Thời gian: <b id="time">0</b> s</span>
+                    <span>Quãng đường: <b id="distance">0</b> m</span>
+                </div>
+            </div>
+
+            <label>Vận tốc: <b id="speedValue">10</b> m/s</label>
+            <input type="range" id="speed" min="1" max="20" value="10">
+
+            <label>Thời gian: <b id="timeValue">0</b> s</label>
+            <input type="range" id="duration" min="0" max="10" value="0">
+
+            <button onclick="playPhysics()">Chạy mô phỏng</button>
+            <button class="secondary" onclick="resetPhysics()">Đặt lại</button>
+            <p class="hint">Công thức: s = v × t</p>
+        </div>
+
+        <div class="panel">
+            <h2>Thư viện bài giảng</h2>
+            <div class="lesson">Bài 1. Chuyển động cơ học</div>
+            <div class="lesson">Bài 2. Lực và chuyển động</div>
+            <div class="lesson">Bài 3. Áp suất</div>
+            <div class="lesson">Bài 4. Điện học</div>
+        </div>
+    </section>
+
+    <section id="informatics" class="page">
+        <div class="intro">
+            <span>INFORMATICS CLASSROOM</span>
+            <h1>Phòng học Tin học</h1>
+            <p>Viết code, thực hành và rèn luyện tư duy thuật toán.</p>
+        </div>
+
+        <div class="panel">
+            <h2>Không gian lập trình</h2>
+            <label>Ngôn ngữ lập trình</label>
+            <select id="language" onchange="changeLanguage()">
+                <option value="cpp">C++</option>
+                <option value="python">Python</option>
+            </select>
+
+            <textarea id="code" spellcheck="false">#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    cout << "Hello World!";
+    return 0;
+}</textarea>
+
+            <button onclick="runCode()">Chạy thử</button>
+            <button class="secondary" onclick="submitCode()">Nộp bài</button>
+
+            <div class="terminal">
+                <span>OUTPUT</span>
+                <pre id="output">Sẵn sàng lập trình...</pre>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Bài tập lập trình</h2>
+            <div class="lesson">Bài 1. Tổng hai số</div>
+            <div class="lesson">Bài 2. Kiểm tra số nguyên tố</div>
+            <div class="lesson">Bài 3. Sắp xếp mảng</div>
+        </div>
+    </section>
+
+    <section id="progress" class="page">
+        <div class="intro">
+            <span>LEARNING PROGRESS</span>
+            <h1>Tiến độ học tập</h1>
+            <p>Theo dõi quá trình học tập của bạn.</p>
+        </div>
+        <div class="panel">
+            <h2>Hành trình của bạn</h2>
+            <p>Tiến độ học tập sẽ được cập nhật khi hoàn thành các bài học.</p>
+        </div>
+    </section>
+
+    <footer>VIRTUAL CLASSROOM · LEARN AND EXPLORE</footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
